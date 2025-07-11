@@ -1,0 +1,66 @@
+{
+  "type": "record",
+  "name": "UserEvent",
+  "namespace": "com.training.kafka.avro",
+  "doc": "Schema for user events with schema evolution support",
+  "fields": [
+    {
+      "name": "userId",
+      "type": "string",
+      "doc": "Unique identifier for the user"
+    },
+    {
+      "name": "action",
+      "type": {
+        "type": "enum",
+        "name": "ActionType",
+        "symbols": ["LOGIN", "LOGOUT", "PURCHASE", "PAGE_VIEW", "SEARCH", "CART_ADD", "CART_REMOVE"]
+      },
+      "doc": "The action performed by the user"
+    },
+    {
+      "name": "timestamp",
+      "type": "long",
+      "logicalType": "timestamp-millis",
+      "doc": "Timestamp when the event occurred"
+    },
+    {
+      "name": "sessionId",
+      "type": "string",
+      "doc": "Session identifier for the user"
+    },
+    {
+      "name": "properties",
+      "type": {
+        "type": "map",
+        "values": "string"
+      },
+      "default": {},
+      "doc": "Additional properties for the event"
+    },
+    {
+      "name": "deviceInfo",
+      "type": [
+        "null",
+        {
+          "type": "record",
+          "name": "DeviceInfo",
+          "fields": [
+            {"name": "deviceType", "type": "string"},
+            {"name": "userAgent", "type": "string"},
+            {"name": "ipAddress", "type": "string"},
+            {"name": "location", "type": ["null", "string"], "default": null}
+          ]
+        }
+      ],
+      "default": null,
+      "doc": "Device information (optional)"
+    },
+    {
+      "name": "version",
+      "type": "int",
+      "default": 1,
+      "doc": "Schema version for evolution tracking"
+    }
+  ]
+}
