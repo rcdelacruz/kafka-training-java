@@ -21,8 +21,7 @@
     {
       "name": "timestamp",
       "type": "long",
-      "logicalType": "timestamp-millis",
-      "doc": "Timestamp when the event occurred"
+      "doc": "Timestamp when the event occurred (epoch millis)"
     },
     {
       "name": "sessionId",

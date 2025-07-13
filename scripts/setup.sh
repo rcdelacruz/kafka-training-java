@@ -32,18 +32,18 @@ check_java() {
     if command -v java &> /dev/null; then
         JAVA_VERSION=$(java -version 2>&1 | awk -F '"' '/version/ {print $2}')
         print_status "Java version found: $JAVA_VERSION"
-        
-        # Check if Java 21 or higher
+
+        # Check if Java 11 or higher
         MAJOR_VERSION=$(echo $JAVA_VERSION | cut -d. -f1)
-        if [ "$MAJOR_VERSION" -ge 21 ]; then
+        if [ "$MAJOR_VERSION" -ge 11 ]; then
             print_status "Java version is compatible ✓"
         else
-            print_warning "Java 21 or higher is recommended. Current version: $JAVA_VERSION"
+            print_warning "Java 11 or higher is required. Current version: $JAVA_VERSION"
         fi
     else
-        print_error "Java not found! Please install Java 21 or higher"
-        echo "  - macOS: brew install openjdk@21"
-        echo "  - Ubuntu: sudo apt install openjdk-21-jdk"
+        print_error "Java not found! Please install Java 11 or higher"
+        echo "  - macOS: brew install openjdk@11"
+        echo "  - Ubuntu: sudo apt install openjdk-11-jdk"
         exit 1
     fi
 }
@@ -71,10 +71,10 @@ check_confluent_cli() {
     else
         print_warning "Confluent CLI not found. Installing..."
         curl -sL --http1.1 https://cnfl.io/cli | sh -s -- latest
-        
+
         # Add to PATH for current session
         export PATH="$HOME/.confluent/bin:$PATH"
-        
+
         print_status "Confluent CLI installed ✓"
         print_warning "Please add the following to your ~/.bashrc or ~/.zshrc:"
         echo "  export PATH=\"\$HOME/.confluent/bin:\$PATH\""
@@ -84,18 +84,18 @@ check_confluent_cli() {
 # Start Kafka services
 start_kafka() {
     print_status "Starting Kafka services..."
-    
+
     # Check if Kafka is already running
     if confluent local services list | grep -q "kafka.*Up"; then
         print_status "Kafka is already running ✓"
     else
         print_status "Starting Kafka cluster..."
         confluent local kafka start
-        
+
         # Wait for services to be ready
         print_status "Waiting for services to be ready..."
         sleep 10
-        
+
         # Verify services are running
         if confluent local services list | grep -q "kafka.*Up"; then
             print_status "Kafka started successfully ✓"
@@ -109,7 +109,7 @@ start_kafka() {
 # Create training topics
 create_topics() {
     print_status "Creating training topics..."
-    
+
     TOPICS=(
         "my-first-topic:3:1"
         "user-events:6:1"
@@ -118,10 +118,10 @@ create_topics() {
         "demo-topic-1:3:1"
         "demo-topic-2:6:1"
     )
-    
+
     for topic_config in "${TOPICS[@]}"; do
         IFS=':' read -r topic partitions replication <<< "$topic_config"
-        
+
         if confluent local kafka topic list | grep -q "^$topic$"; then
             print_status "Topic '$topic' already exists"
         else
@@ -136,7 +136,7 @@ create_topics() {
 # Compile Java project
 compile_project() {
     print_status "Compiling Java project..."
-    
+
     if [ -f "pom.xml" ]; then
         mvn clean compile
         print_status "Project compiled successfully ✓"
@@ -182,7 +182,7 @@ main() {
     echo "    Apache Kafka Training Course Setup"
     echo "==============================================="
     echo
-    
+
     check_java
     check_maven
     check_confluent_cli

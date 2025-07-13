@@ -1,0 +1,51 @@
+# Maven
+target/
+*.jar
+*.war
+*.ear
+*.class
+
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+.settings/
+.project
+.classpath
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Confluent CLI
+.confluent/
+
+# Kafka logs (if running locally)
+kafka-logs/
+zookeeper/
+
+# Generated Avro classes (if not committed)
+# src/main/java/com/training/kafka/avro/
+
+# Application specific
+application-local.properties
+
+
+# Docs
+PROGRESSIVE-PROJECT-SUMMARY.md
+TRAINING-SUMMARY.md
+CLEANUP-SUMMARY.md
+AVRO-WARNINGS-EXPLAINED.md
