@@ -407,17 +407,24 @@ public class EventMartDemoOrchestrator {
     }
 
     /**
+     * Get current demo metrics
+     */
+    public DemoMetrics getMetrics() {
+        return metrics;
+    }
+
+    /**
      * Demo metrics tracking
      */
-    private static class DemoMetrics {
-        int usersRegistered = 0;
-        int productsCreated = 0;
-        int ordersPlaced = 0;
-        int ordersConfirmed = 0;
-        int paymentsCompleted = 0;
-        int notificationsSent = 0;
-        int pageViews = 0;
-        double totalRevenue = 0.0;
+    public static class DemoMetrics {
+        public int usersRegistered = 0;
+        public int productsCreated = 0;
+        public int ordersPlaced = 0;
+        public int ordersConfirmed = 0;
+        public int paymentsCompleted = 0;
+        public int notificationsSent = 0;
+        public int pageViews = 0;
+        public double totalRevenue = 0.0;
     }
 
     /**
